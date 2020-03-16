@@ -1,0 +1,95 @@
+
+// 当超过宽度时，显示省略号
+@mixin ell() {
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+// 利用绝对定位后margin自适应实现水平垂直居中，兼容IE6+
+@mixin caa($direction: both) {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  @if $direction == both {
+    margin: auto;
+  } @else if $direction == h {
+    margin-left: auto;
+    margin-right: auto;
+  } @else if $direction == v {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}
+// 只适用行内或行内块级元素水平垂直居中
+@mixin ctv() {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+// 尺寸确定，绝对定位后margin偏移实现水平垂直居中，兼容IE6+，不好用
+@mixin ca($x, $y) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: $x;
+  height: $y;
+  margin-left: -$x/2;
+  margin-top: -$y/2;
+}
+
+// 利用translate实现未知宽高的水平垂直居中，兼容性不好
+@mixin ct($direction: both) {
+  position: absolute;
+  @if $direction == both {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0);
+  } @else if $direction == h {
+    left: 50%;
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+  } @else if $direction == v {
+    top: 50%;
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+// flex实现水平垂直居中
+@mixin cf($direction: both) {
+  display: flex; /*谷歌，火狐等新版本*/
+  display: -webkit-box; /*安卓低版本*/
+  display: -moz-box; /*火狐低版本*/
+  display: -ms-flexbox; /*IE版本*/
+  display: -webkit-flex; /*谷歌*/
+  @if $direction == both {
+    justify-content: center;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    align-items: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+  } @else if $direction == h {
+    justify-content: center;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+  } @else if $direction == v {
+    align-items: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+  }
+}
